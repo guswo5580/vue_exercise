@@ -20,17 +20,8 @@ export default {
     methods : {
         addTodo : function(){
             if(this.newTodoItem !== ''){
-            //Object로 넘기는 것이 일상으로 되어야 한다
-            //Text로 넘기는 것이 아니라 obj로 받고 넘기는 과정으로 접근
-                var obj = {
-                    completed : false,
-                    item : this.newTodoItem
-                };  
-
-                //localStorage.setItem('key', 'value')
-            
-                localStorage.setItem(this.newTodoItem, JSON.stringify(obj));
-                //JSON으로 변환해서 obj를 넘기는 것으로 확인!!
+                this.$emit('addTodoItem' , this.newTodoItem);
+                //input.vue에서 app.vue로 newTodoItem에 대한 정보를 emit해준다
                 this.clearInput();
             }
         },
