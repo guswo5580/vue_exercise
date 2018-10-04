@@ -8,7 +8,7 @@
           v-on:toggleItem="toggleOneItem"
     ></todo-list>
     <!-- v-on:이벤트 이름, 실행될 메소드 -->
-    <todo-footer v-on:clearItems="clearAllItems"></todo-footer>
+    <todo-footer></todo-footer>
   </div>
 </template>
 
@@ -17,6 +17,8 @@ import TodoHeader from './components/TodoHeader.vue';
 import TodoInput from './components/TodoInput.vue';
 import TodoList from './components/TodoList.vue';
 import TodoFooter from './components/TodoFooter.vue';
+
+import {eventBus} from './utils/eventBus.js';
 
 export default {
   data : function(){
@@ -74,7 +76,14 @@ export default {
                 }
             }
         }
+        //import한 eventBus 를 통해 위의 함수를 실행하는 방법
+        //footer로부터 발신된 delete:all이란 이름의 이벤트를 받는다 == on으로 표현한다.
+        var vm = this;
+        eventBus.$on('delete:all', function(){
+          vm.clearAllItems();
+        });
     },
+    
   components : {
     'TodoHeader' : TodoHeader,
     'TodoInput' : TodoInput,
@@ -82,7 +91,7 @@ export default {
     'TodoFooter' : TodoFooter
   }
 
-}
+};
 </script>
 
 <style>

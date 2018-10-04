@@ -5,22 +5,22 @@
                 <div class="modal-container">
                     <div class="modal-header">
                         <slot name="header">
-                            default header
+                           
                         </slot>
                         <!-- slot으로 지정해준 부분의 경우 상위 컴포넌트에서 slot name을 통해 변화가 가능하다 -->
                     </div>
 
                     <div class="modal-body">
                         <slot name="body">
-                        default body
+                        
                         </slot>
                     </div>
                     <div class="modal-footer">
                         <slot name="footer">
-                            default footer
-                            <button class="modal-default-button" @click="$emit('close')">
+                            
+                            <!-- <button class="modal-default-button" @click="$emit('close')">
                                 OK
-                            </button>
+                            </button> -->
                         </slot>
                     </div>
                 </div>

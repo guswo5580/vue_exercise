@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- ul 태그를 transition 태그로 변환시켜 준다 -->
         <transition-group name="list" tag ="ul">
             <li class = "shadow" v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item">
                 <!-- v-for에서 list item의 순서를 알 수 있는 방법 -->

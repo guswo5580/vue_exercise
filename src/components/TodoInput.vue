@@ -6,8 +6,11 @@
             <!-- 영역을 클릭했을 때도 같은 효과를 얻도록 한다 -->
             <i class="fas fa-plus addBtn"></i>
         </span>
-        
+
+
+        <!-- Modal을 따로 선언해주는 과정 -->
         <Modal v-if="showModal" @close="showModal = false">
+                                        <!-- showModal을 작동시키기 위해 booldata 로 showModal을 선언해준다 -->
             <h3 slot="header">경고
                 <i class="closeModalBtn fas fa-times" v-on:click="showModal = false"></i>
             </h3>
@@ -18,6 +21,9 @@
                 copyright
             </div>
         </Modal>
+        <!-- slot은 Modal.vue에서 구멍을 뚫어놓고
+        사용하고 싶을 때마다 해당 부분에 맞게 새롭게 이용할 수 있도록 하는 것이다 -->
+
     </div>
 </template>
 
@@ -41,7 +47,9 @@ export default {
                 this.$emit('addTodoItem' , this.newTodoItem);
                 //input.vue에서 app.vue로 newTodoItem에 대한 정보를 emit해준다
                 this.clearInput();
+
             }else{
+                //this.showModal = true로 하게 되면 일회성으로 이용하는 것이기 때문에 !=으로 해준다
                 this.showModal = !this.showModal;
             }
         },

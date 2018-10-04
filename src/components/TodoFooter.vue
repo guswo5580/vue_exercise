@@ -6,14 +6,17 @@
     </div>
 </template>
 
+
 <script>
+import {eventBus} from '../utils/eventBus.js';
+
 export default {
     methods : {
         clearTodo : function(){
-            this.$emit('clearItems');
+            eventBus.$emit("delete:all");
         }
     }
-}
+};
 </script>
 
 <style scoped>
