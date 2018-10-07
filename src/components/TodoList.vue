@@ -31,12 +31,12 @@ export default {
     props : ['propsdata'],
 
     methods : {
-        removeTodo : function(todoItem, index){
+        removeTodo(todoItem, index){
             this.$emit('removeItem' , todoItem, index);
             //app.vue를 통해 event 전송을 위해 받은 값을 그대로 전달해준다
             //event를 발생시킬 때는 인자가 있는지 없는지 잘 확인한다
         },
-        toggleComplete : function(todoItem, index){
+        toggleComplete(todoItem, index){
             this.$emit('toggleItem', todoItem, index);
         }
     }

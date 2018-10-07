@@ -32,7 +32,7 @@
 import Modal from './common/modal.vue';
 
 export default {
-    data : function(){
+    data(){
         return{
             newTodoItem : "",
             
@@ -42,7 +42,7 @@ export default {
     },
     //v-model에 접근할 수 있는 data를 선언
     methods : {
-        addTodo : function(){
+        addTodo(){
             if(this.newTodoItem !== ''){
                 this.$emit('addTodoItem' , this.newTodoItem);
                 //input.vue에서 app.vue로 newTodoItem에 대한 정보를 emit해준다
@@ -53,14 +53,14 @@ export default {
                 this.showModal = !this.showModal;
             }
         },
-        clearInput : function() {
+        clearInput() {
             this.newTodoItem = '';
         }
         
     },
     //input.vue에 대한 하위 컴포넌트로 modal을 지정
     components : {
-        'Modal' : Modal
+        Modal
     }
 }
 </script>

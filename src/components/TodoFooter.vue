@@ -12,7 +12,7 @@ import {eventBus} from '../utils/eventBus.js';
 
 export default {
     methods : {
-        clearTodo : function(){
+        clearTodo(){
             eventBus.$emit("delete:all");
         }
     }

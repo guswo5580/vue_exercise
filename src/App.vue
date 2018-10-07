@@ -21,16 +21,16 @@ import TodoFooter from './components/TodoFooter.vue';
 import {eventBus} from './utils/eventBus.js';
 
 export default {
-  data : function(){
+  data (){
     return{
       todoItems : []
     }
   },
   methods : {
     //Input에서 실행되는 정보를 event화 시켜서 app.vue에서 뿌려주는 방향으로 간다
-    addOneItem : function(todoItem){
+    addOneItem(todoItem){
       //넘어온 newTodoItem에 대한 인자를 todoItem으로 받아 새롭게 매핑해준다
-      var obj = {
+      const obj = {
                     completed : false,
                     //item : this.newTodoItem
                     item : todoItem
@@ -41,7 +41,7 @@ export default {
       //localStorage에서의 목록과 실제 웹상의 목록을 동기화시켜준다
     },
 
-    removeOneItem : function(todoItem, index){
+    removeOneItem(todoItem, index){
      localStorage.removeItem(todoItem.item);
      //todoItem으로 지우면 객체가 모두 지워져버려 이상이 생긴다
      //명확하게 todoItem.item으로 지워주자 -- todoItem.item == key로 설정했기 때문
@@ -64,9 +64,9 @@ export default {
     }
   },
   //app.vue에서 todoItem에 대한 내용을 List.vue에게 내려보내준다 -- props 
-  created : function(){
+  created (){
         if(localStorage.length > 0){
-            for(var i=0; i<localStorage.length; i++){
+            for(let i=0; i<localStorage.length; i++){
                 if(localStorage.key(i) !== 'loglevel:webpack-dev-server'){
                     //넣을 때는 JSON stringify , 빼낼 때는 JSON parse
                     this.todoItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
@@ -78,17 +78,17 @@ export default {
         }
         //import한 eventBus 를 통해 위의 함수를 실행하는 방법
         //footer로부터 발신된 delete:all이란 이름의 이벤트를 받는다 == on으로 표현한다.
-        var vm = this;
+        const vm = this;
         eventBus.$on('delete:all', function(){
           vm.clearAllItems();
         });
     },
     
   components : {
-    'TodoHeader' : TodoHeader,
-    'TodoInput' : TodoInput,
-    'TodoList' : TodoList,
-    'TodoFooter' : TodoFooter
+    TodoHeader,
+    TodoInput,
+    TodoList,
+    TodoFooter
   }
 
 };
