@@ -2,7 +2,7 @@
     <div>
         <!-- ul 태그를 transition 태그로 변환시켜 준다 -->
         <transition-group name="list" tag ="ul">
-            <li class = "shadow" v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item">
+            <li class = "shadow" v-for="(todoItem, index) in this.$store.state.todoItems" v-bind:key="todoItem.item">
                 <!-- v-for에서 list item의 순서를 알 수 있는 방법 -->
                 <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted:todoItem.completed}" 
                         v-on:click="toggleComplete(todoItem, index)"></i>
@@ -28,16 +28,14 @@
 <script>
 export default {
     //app.vue에서 내려보내는 정보를 받는다
-    props : ['propsdata'],
-
     methods : {
         removeTodo(todoItem, index){
-            this.$emit('removeItem' , todoItem, index);
-            //app.vue를 통해 event 전송을 위해 받은 값을 그대로 전달해준다
-            //event를 발생시킬 때는 인자가 있는지 없는지 잘 확인한다
+            //this.$emit('removeItem' , todoItem, index);
+            this.$store.commit('removeOneItem', {todoItem, index});
         },
         toggleComplete(todoItem, index){
-            this.$emit('toggleItem', todoItem, index);
+            //this.$emit('toggleItem', todoItem, index);
+            this.$store.commit('toggleOneItem', {todoItem, index});
         }
     }
     

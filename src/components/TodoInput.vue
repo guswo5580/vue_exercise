@@ -44,8 +44,10 @@ export default {
     methods : {
         addTodo(){
             if(this.newTodoItem !== ''){
-                this.$emit('addTodoItem' , this.newTodoItem);
-                //input.vue에서 app.vue로 newTodoItem에 대한 정보를 emit해준다
+                //this.$emit('addTodoItem' , this.newTodoItem);
+                this.$store.commit('addOneItem', this.newTodoItem);
+                //store와 연동할 수 있도록 새롭게 변경
+                //mutation type과 전달 인자를 전송해준다
                 this.clearInput();
 
             }else{
