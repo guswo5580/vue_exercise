@@ -2,10 +2,11 @@
     <div>
         <!-- ul 태그를 transition 태그로 변환시켜 준다 -->
         <transition-group name="list" tag ="ul">
-            <li class = "shadow" v-for="(todoItem, index) in this.$store.state.todoItems" v-bind:key="todoItem.item">
+            <li class = "shadow" v-for="(todoItem, index) in this.storedTodoItems" v-bind:key="todoItem.item">
+                                        <!-- this.$store.state.todoItems에서 mapgetters를 통해 todoItems를 가져오고 this.todoItems로 실행하는 경우 -->
                 <!-- v-for에서 list item의 순서를 알 수 있는 방법 -->
                 <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted:todoItem.completed}" 
-                        v-on:click="toggleComplete(todoItem, index)"></i>
+                        v-on:click="toggleComplete({todoItem, index})"></i>
                 
                 <span v-bind:class = "{textCompleted : todoItem.completed}">
                     <!-- v-bind class의 힘 -- todoItem의 completed요소가 true일 대만 textCompleted의 class가 실행됨 -->
@@ -15,7 +16,7 @@
 
                 </span>
                 
-                <span class = "removeBtn" v-on:click="removeTodo(todoItem, index)">
+                <span class = "removeBtn" v-on:click="removeTodo({todoItem, index})">
                 <!-- todoItem 과 index를 받아서 넘긴다 -->
                 <i class="fas fa-trash-alt"></i>
                 </span> 
@@ -26,18 +27,43 @@
 </template>
 
 <script>
+import {mapgetters, mapGetters, mapMutations} from 'vuex';
+
 export default {
     //app.vue에서 내려보내는 정보를 받는다
     methods : {
-        removeTodo(todoItem, index){
-            //this.$emit('removeItem' , todoItem, index);
-            this.$store.commit('removeOneItem', {todoItem, index});
-        },
-        toggleComplete(todoItem, index){
-            //this.$emit('toggleItem', todoItem, index);
-            this.$store.commit('toggleOneItem', {todoItem, index});
-        }
-    }
+        ...mapMutations({
+            removeTodo : 'removeOneItem',
+            //mapMutations는 인자를 선언하지 않아도 자동적으로 인자를 넘겨준다
+            //대신 인자를 보내는 경우 {}로 묶어 하나의 객체로 보내도록 해야한다
+            //아래처럼 굳이 store.commit을 해줄 필요가 없게 된다
+            toggleComplete : 'toggleOneItem'
+        }),
+        
+        // removeTodo(todoItem, index){
+        //     //this.$emit('removeItem' , todoItem, index);
+        //     this.$store.commit('removeOneItem', {todoItem, index});
+        // },
+
+        // toggleComplete(todoItem, index){
+        //     //this.$emit('toggleItem', todoItem, index);
+        //     this.$store.commit('toggleOneItem', {todoItem, index});
+        // }
+    },
+    computed : {
+        // todoItems(){
+        //     return this.$store.getters.storedTodoItems;
+        // }
+        //...를 통해 mapGetters에 있는 것을 모두 가져오게 되고, 그 중에서 storedTodoItems만 가져온다!!!
+        ...mapGetters(['storedTodoItems'])
+
+        //[]로 선언하는 경우 - getters 내부의 이름과 list안에 들어가는 이름이 같은 경우
+        
+        // ...mapGetters({
+        //     todoItems : 'storedTodoItems'
+        // }) {}객체로 선언하는 경우 - getters 내부의 이름과 list안에 들어가는 이름이 다른 경우 객체화로 만들어주기
+
+    },
     
 }
 </script>

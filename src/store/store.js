@@ -32,6 +32,12 @@ export const store = new Vuex.Store({
     state : {
         todoItems : storage.fetch()
     },
+    
+    getters : {
+        storedTodoItems(state){
+            return state.todoItems;
+        }
+    },
     //methods와 같은 역할
     mutations : {
         //mutation을 설정할 때 기본 인자 요소 state의 인자를 접근해야한다
