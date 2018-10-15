@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import * as getters from './getters.js'
+import * as mutations from './mutations.js'
+
 Vue.use(Vuex);
 //vue plugin을 사용하는 방법
 
@@ -32,40 +35,42 @@ export const store = new Vuex.Store({
     state : {
         todoItems : storage.fetch()
     },
-    
-    getters : {
-        storedTodoItems(state){
-            return state.todoItems;
-        }
-    },
-    //methods와 같은 역할
-    mutations : {
-        //mutation을 설정할 때 기본 인자 요소 state의 인자를 접근해야한다
-        //todoItem 부분 == payload 부분
-        addOneItem(state, todoItem) {
-            const obj = {
-                completed : false,
-                //item : this.newTodoItem
-                item : todoItem
-            }; 
-            localStorage.setItem(todoItem, JSON.stringify(obj));
-            //this.todoItems.push(obj);
-            state.todoItems.push(obj);
-            //this 의 scope의 차이가 생기기 때문에 state로 재선언을 하여 push
-        },
-        removeOneItem(state, payload){
-            localStorage.removeItem(payload.todoItem.item);
-    
-            //this.todoItems.splice(index, 1); 
-            state.todoItems.splice(payload.index, 1);
-        },
-        toggleOneItem(state, payload){
-            state.todoItems[payload.index].completed = !state.todoItems[payload.index].completed;
 
-            localStorage.removeItem(payload.todoItem.item);
-            localStorage.setItem(payload.todoItem, JSON.stringify(payload.todoItem));
-        }
-    }
+    // getters : {
+    //     storedTodoItems(state){
+    //         return state.todoItems;
+    //     }
+    // },
+    getters,
+    mutations
+    //methods와 같은 역할
+    // mutations : {
+    //     mutation을 설정할 때 기본 인자 요소 state의 인자를 접근해야한다
+    //     todoItem 부분 == payload 부분
+    //     addOneItem(state, todoItem) {
+    //         const obj = {
+    //             completed : false,
+    //             //item : this.newTodoItem
+    //             item : todoItem
+    //         }; 
+    //         localStorage.setItem(todoItem, JSON.stringify(obj));
+    //         //this.todoItems.push(obj);
+    //         state.todoItems.push(obj);
+    //         //this 의 scope의 차이가 생기기 때문에 state로 재선언을 하여 push
+    //     },
+    //     removeOneItem(state, payload){
+    //         localStorage.removeItem(payload.todoItem.item);
+    
+    //         //this.todoItems.splice(index, 1); 
+    //         state.todoItems.splice(payload.index, 1);
+    //     },
+    //     toggleOneItem(state, payload){
+    //         state.todoItems[payload.index].completed = !state.todoItems[payload.index].completed;
+
+    //         localStorage.removeItem(payload.todoItem.item);
+    //         localStorage.setItem(payload.todoItem, JSON.stringify(payload.todoItem));
+    //     }
+    // }
 });
 
 //export main.js 에서 불러와서 사용할 수 있도록 한다
